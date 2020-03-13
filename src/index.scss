@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100vh;
+  width: 100%;
+}
+
+// Start: Styling for navbar links
+.navbar-brand {
+  a {
+    color: rgba(255, 255, 255, 0.75);
+      text-decoration: none !important;
+      transition: color ease-in 0.5s;
+
+      &:hover {
+        color: rgba(255, 255, 255, 1);
+      }
+  }
+}
+
+#responsive-navbar-nav {
+  .nav-link {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: color ease-in 0.5s;
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.75);
+    }
+  }
+}
+// End: Styling for navbar links
+
+// Start: Styling for error404 page
+.error {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dde7fd;
+
+  h1 {
+    color: #794c4c;
+  }
+}
+// End: Styling for error404 page
+
+// Start: Styling for headings
+.heading {
+  margin: 1rem 0;
+}
+// End: Styling for headings
+
+
+.fa-spinner {
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  svg {
+    color: #318b54;
+  }
+}
+
+.alert {
+  margin: 0.5rem 0 !important;
+  padding: 0.15rem 1.25rem !important;
+  text-align: center;
+}

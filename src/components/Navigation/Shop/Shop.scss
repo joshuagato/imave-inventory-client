@@ -1,0 +1,80 @@
+.shop {
+  background-color: rgb(230, 252, 246);
+  padding: 2rem;
+
+  .products {
+
+    .products-list {
+      display: inline-block;
+      margin-bottom: 5rem;
+
+      @media (min-width: 768px) {
+        // width: 19rem;
+        width: 24%;
+        padding: 0 0.5rem;
+      }
+
+      .upper-div {
+        height: 15rem;
+        position: relative;
+        
+        .product-name {
+          position: absolute;
+          padding: 0.5rem;
+          background-color: rgba(92, 91, 91, 0.9);
+          color: yellowgreen;
+          font-size: 1rem;
+          font-weight: bolder;
+          left: 1rem;
+          bottom: 1rem;
+        }
+
+        .price {
+          position: absolute;
+          padding: 0.5rem;
+          background-color: #030303;
+          font-size: 1rem;
+          font-weight: bolder;
+          color: rgb(230, 252, 246);
+          right: 1rem;
+          bottom: 1rem;
+        }
+    
+        img {
+          width: 100%;
+          height: 15rem;
+        }
+      }
+
+      .lower-div {
+        width: 100%;
+        padding: 0 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px groove #3d913d;
+        // overflow: hidden;
+
+        small {
+
+        }
+
+        .buttons {
+          display: flex;
+          justify-content: space-between;
+
+          .add-to-cart, .buy-now {
+            border: none;
+            background-color: #afafaf;
+            color: #e7e5e5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.3rem;
+            transition: all ease 0.7s;
+
+            &:hover {
+              background-color: #7c7c7c;
+            }
+          }
+        }
+      }
+    }
+  }
+}

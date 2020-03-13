@@ -1,0 +1,18 @@
+.about-us {
+  background-color: #e6fcf6;
+  padding: 2rem 4rem;
+
+  .info-section {
+    width: 100%;
+
+    img {
+      display: block;
+      width: 90%;
+      margin: auto;
+
+      @media (min-width: 768px) {
+        width: 40rem;
+      }
+    }
+  }
+}
