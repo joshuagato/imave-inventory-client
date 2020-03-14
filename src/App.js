@@ -15,6 +15,7 @@ import Error404 from './components/Utilities/Error404/Error404';
 import NavBar from './components/Navigation/NavBar/NavBar';
 
 function App() {
+  console.log(process.env.REACT_APP_LOGIN_URL);
   return (
     <div className="App">
       <NavBar />
