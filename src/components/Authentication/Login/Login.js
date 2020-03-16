@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import { NavLink } from 'react-router-dom';
+import ButtonSpinner from '../../Utilities/ButtonSpinner/ButtonSpinner';
 
 class Login extends Component {
   state = {
@@ -86,7 +87,9 @@ class Login extends Component {
               <label htmlFor="password">Password</label>
             </div>
             <div className="form-group">
-              <button disabled={props.btnDisabled}>Login</button>
+              <button disabled={props.btnDisabled}>
+                { this.props.loading ? <ButtonSpinner /> : "Login" }
+              </button>
             </div>
             <div className="form-group">
               <p className="text-muted text-center text-display">Don't have an account yet?

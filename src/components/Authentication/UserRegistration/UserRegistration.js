@@ -3,6 +3,7 @@ import './UserRegistration.scss';
 import ReactstrapAlert from '../../Utilities/ReactstrapAlert/ReactstrapAlert';
 import * as actions from '../../../store/actions/index';
 import Auxil from '../../Utilities/Auxil/Auxil';
+import ButtonSpinner from '../../Utilities/ButtonSpinner/ButtonSpinner';
 
 import { Redirect } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
@@ -108,7 +109,9 @@ class UserRegistration extends Component {
               <label htmlFor="password2">Confirm Password</label>
             </div>
             <div className="form-group">
-              <button disabled={props.btnDisabled}>Register</button>
+              <button disabled={props.btnDisabled}>
+                { this.props.loading ? <ButtonSpinner /> : "Register" }
+              </button>
             </div>
             <div className="form-group">
               <p className="text-muted text-center text-display">Already Registered?
