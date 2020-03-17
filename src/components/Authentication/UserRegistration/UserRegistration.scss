@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(230, 252, 246);
+  background-color: #e6fcf6;
 
   .heading {
     margin: 1rem 0;
@@ -30,7 +30,7 @@
       @media (min-width: 768px) {
         margin: 0.2rem 0;
       }
-  
+
       label {
         display: block;
         text-align: center;

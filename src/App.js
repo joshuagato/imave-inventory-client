@@ -11,6 +11,7 @@ import Shop from './components/Navigation/Shop/Shop';
 import Profile from './components/Navigation/Profile/Profile';
 import Logout from './components/Authentication/Logout/Logout';
 import Error404 from './components/Utilities/Error404/Error404';
+import Footer from './components/Footer/Footer';
 
 import NavBar from './components/Navigation/NavBar/NavBar';
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" exact component={Shop} />
           <Route component={Error404} />
         </Switch>
+      <Footer />
     </div>
   );
 }

@@ -1,15 +1,34 @@
 import React, { Component } from 'react';
 import './Shop.scss';
+// import axios from 'axios';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import FaSpinner from '../../Utilities/FaSpinner/FaSpinner';
 
 export class Shop extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    products: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    data: {}
+    this.productIdRef = React.createRef();
+    this.productPriceRef = React.createRef();
+
+    this.addToCartHander = event => {
+      event.preventDefault();
+      
+      const productId = event.target.children['productId'].value;
+      const productPrice = event.target.children['productPrice'].value;
+
+      const productDetails = {
+        productId: productId,
+        productPrice: productPrice
+      }
+
+      // axios.post();
+
+      console.log(productId, productPrice);
+      console.log(productDetails);
+    };
   }
 
   componentDidMount() {
@@ -37,7 +56,11 @@ export class Shop extends Component {
                   <div className="lower-div">
                     <small className="text-muted">{product.description}</small>
                     <div className="buttons">
-                      <button className="add-to-cart">Add to Cart</button>
+                      <form onSubmit={this.addToCartHander}>
+                        <input id="productId" type="hidden" value={product._id} />
+                        <input id="productPrice" type="hidden" value={product.price} />
+                        <button className="add-to-cart">Add to Cart</button>
+                      </form>
                       <button className="buy-now">Buy Now</button>
                     </div>
                   </div>
