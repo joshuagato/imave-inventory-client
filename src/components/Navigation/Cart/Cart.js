@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import './Cart.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 
 class Cart extends Component {
   state = {
-    items: [1, 2, 3, 4, 5, 6]
+    items: [1, 2, 3, 4]
   }
 
   render() {
@@ -27,7 +28,7 @@ class Cart extends Component {
             <tbody>
               {
                 this.state.items.map(item => (
-                  <tr>
+                  <tr key={item}>
                     <td>
                       <span className="img">
                         <img src='https://msf-media.imgix.net/AssetLink/541g6474t4vy2ykq7v4a04m83031b42f.jpg' alt='picas' />
@@ -51,6 +52,11 @@ class Cart extends Component {
               }
             </tbody>
           </table>
+          <section className="final-div">
+            <span className="grand-total">Grand-Total: ${1000000000}</span>
+            <NavLink to='/cart'>Continue Shopping</NavLink >
+            <NavLink to='/cart'>Proceed to Checkout</NavLink >
+            </section>
         </div>
       </div>
     );
