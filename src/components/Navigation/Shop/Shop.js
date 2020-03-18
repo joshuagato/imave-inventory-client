@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './Shop.scss';
-// import axios from 'axios';
-// import { NavLink } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
@@ -25,10 +23,15 @@ export class Shop extends Component {
         productPrice: productPrice
       }
 
-      // axios.post();
+      const axiosHeaders = {
+        headers: {
+          Authorization: this.props.token
+        }
+      }
 
-      console.log(productId, productPrice);
-      console.log(productDetails);
+      this.props.addToCart(productDetails, axiosHeaders);
+
+      this.props.history.push('/cart');
     };
   }
 
@@ -80,6 +83,7 @@ export class Shop extends Component {
 
 const mapStateToProps = state => {
   return {
+    token: state.loginReducer.token,
     products: state.productsReducer.products,
     loading: state.productsReducer.loading,
     successMessage: state.productsReducer.successMessage,
@@ -89,7 +93,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchAllProducts: () => dispatch(actions.fetchProducts())
+    onFetchAllProducts: () => dispatch(actions.fetchProducts()),
+    addToCart: (productDetails, axiosHeaders) => dispatch(actions.addToCart(productDetails, axiosHeaders))
   };
 }
 

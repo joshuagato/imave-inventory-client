@@ -57,7 +57,7 @@ export const register = userInput => {
       success ? dispatch(registrationSuccess(message)) : dispatch(registrationSuccessWithWarning(message));
     })
     .catch(error => {
-      dispatch(registrationFailure(error.response.data.message));
+      if (error.response) dispatch(registrationFailure(error.response.data.message));
     });
   };
 }

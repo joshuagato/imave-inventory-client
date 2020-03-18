@@ -3,6 +3,13 @@
   padding: 2rem;
   // height: 100vh;
 
+  .no-item {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .info-section {
     display: flex;
     flex-direction: column;
@@ -73,6 +80,10 @@
         }
         span {
           margin: 0 0.3rem;
+        }
+
+        .title, .unit-price {
+          font-size: small;
         }
       }
     }

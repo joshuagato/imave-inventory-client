@@ -64,7 +64,7 @@ export const login = userInput => {
         dispatch(loginSuccessWithWarning(response.data.message))
     })
     .catch(error => {
-      dispatch(loginFailure(error.response.data.message));
+      if (error.response) dispatch(loginFailure(error.response.data.message));
     });
   };
 };
