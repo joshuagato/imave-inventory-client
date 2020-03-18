@@ -42,6 +42,7 @@ export class Shop extends Component {
         <section className="head-section">
           <h3 className="text-success">Shop</h3>
           <h6 className="text-muted">Explore our products</h6>
+          <hr />
         </section>
         {this.props.products ?
           <section className="products">

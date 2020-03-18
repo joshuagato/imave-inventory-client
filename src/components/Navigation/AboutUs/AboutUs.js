@@ -6,8 +6,8 @@ class AboutUs extends Component {
     return (
       <div className="about-us">
         <div className="about-us-heading">
-          <h3 className="text-muted text-center">IMAVE HAIR PRODUCTS!</h3>
-          <h6 className="text-center text-secondary">Know More About Us.</h6>
+          <h3 className="text-success">iMave Hair Products</h3>
+          <h6 className="text-secondary">Know more about us</h6>
           <hr />
         </div>
         <div className="info-section">

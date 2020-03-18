@@ -6,8 +6,8 @@ class Cart extends Component {
     return (
       <div className="profile">
         <div className="cart-heading">
-          <h3 className="text-muted text-center">IMAVE PROFILE</h3>
-          <h6 className="text-center text-secondary">All your information with us.</h6>
+          <h3 className="text-success">Profile</h3>
+          <h6 className="text-secondary">All your information with us</h6>
           <hr />
         </div>
         <div className="info-section">
