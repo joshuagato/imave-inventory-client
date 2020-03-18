@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
 import './Cart.scss';
+
+import axios from 'axios';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 
 class Cart extends Component {
   state = {
-    items: [1, 2, 3, 4]
+    items: [1, 2, 3, 4],
+    cart: '',
+    failureMessage: ''
+  }
+
+  componentDidMount() {
+    const axiosHeaders = {
+      headers: {
+      Authorization: this.props.token
+      }
+    }
+
+    axios.get(process.env.REACT_APP_FETCH_SHOPPING_CART_URL, axiosHeaders)
+    .then(response => this.setState({ cart: response.data.cart }))
+    .catch(error => this.setState({ failureMessage: error.response.data.message }));
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.cart);
   }
 
   render() {
+    const { cart } = this.state;
     return (
       <div className="cart">
         <div className="cart-heading">
@@ -26,16 +48,16 @@ class Cart extends Component {
                 </tr>
             </thead>
             <tbody>
-              {
-                this.state.items.map(item => (
+              {cart ?
+                cart.items.map(item => (
                   <tr key={item}>
                     <td>
                       <span className="img">
-                        <img src='https://msf-media.imgix.net/AssetLink/541g6474t4vy2ykq7v4a04m83031b42f.jpg' alt='picas' />
+                        <img src={`${process.env.REACT_APP_PRODUCT_PICTURES_URL}${item.imageUrl}`} alt={item.title} />
                       </span>
-                      <span>Pendrive</span>
+                      <span>{item.title}</span>
                     </td>
-                    <td>$10</td><td>3</td><td>$30</td>
+                    <td>${item.unitPrice}</td><td>{item.quantity}</td><td>${item.subTotalPrice}</td>
                     <td>
                       <button className="decrease">
                         <FontAwesomeIcon icon={faMinus} />
@@ -48,19 +70,26 @@ class Cart extends Component {
                       </button>
                     </td>
                   </tr>
-                ))
+                )):
+                null
               }
             </tbody>
           </table>
           <section className="final-div">
-            <span className="grand-total">Grand-Total: ${1000000000}</span>
-            <NavLink to='/cart'>Continue Shopping</NavLink >
-            <NavLink to='/cart'>Proceed to Checkout</NavLink >
-            </section>
+            <span className="grand-total">Grand-Total: ${cart.grandTotalPrice}</span>
+            <NavLink to='/cart'>Continue Shopping</NavLink>
+            <NavLink to='/cart'>Proceed to Checkout</NavLink>
+          </section>
         </div>
       </div>
     );
   };
 };
 
-export default Cart;
+const mapStateToProps = state => {
+  return {
+    token: state.loginReducer.token
+  };
+};
+
+export default connect(mapStateToProps)(Cart);

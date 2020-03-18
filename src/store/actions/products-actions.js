@@ -36,6 +36,6 @@ export const fetchProducts = () => {
       if (response.data.success) dispatch(fetchProductsSuccess(response.data.products));
       else dispatch(fetchProductsSuccessWithWarning(response.data.message));
     })
-    .catch(error => dispatch(fetchProductsFailure(error.response)));
+    .catch(error => dispatch(fetchProductsFailure(error.response.data.message)));
   };
 };

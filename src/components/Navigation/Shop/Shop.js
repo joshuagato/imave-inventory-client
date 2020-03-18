@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Shop.scss';
 // import axios from 'axios';
+// import { NavLink } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
@@ -48,7 +49,7 @@ export class Shop extends Component {
               this.props.products.map(product => (
                 <div key={product._id} className="products-list">
                   <div className="upper-div">
-                    <img src={`${process.env.REACT_APP_PRODUCT_PICTURES_URL}${product.productPicture}`} 
+                    <img src={`${process.env.REACT_APP_PRODUCT_PICTURES_URL}${product.imageUrl}`} 
                       alt="product_pic" />
                     <span className="product-name">{product.title}</span>
                     <span className="price">${product.price}</span>
