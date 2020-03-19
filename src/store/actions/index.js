@@ -4,4 +4,4 @@ export { enableRegisterButton, disableRegisterButton, register } from './registe
 
 export { enableLoginButton, disableLoginButton, login, logout } from './login-actions';
 
-export { addToCart, fetchCart } from './cart-actions';
+export { addToCart, fetchCart, increaseItemQuantity, decreaseItemQuantity, removeCartItem, clearCart } from './cart-actions';

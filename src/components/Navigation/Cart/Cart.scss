@@ -51,17 +51,10 @@
               border: none;
               border-radius: 0.3rem;
               transition: all ease 0.7s;
+              outline: none;
             }
   
-            .decrease {
-              background-color: #d5dd8a;
-  
-              &:hover {
-                background-color: #c7da24;
-              }
-            }
-  
-            .increase {
+            .increase, .decrease {
               background-color: #81bda1;
   
               &:hover {

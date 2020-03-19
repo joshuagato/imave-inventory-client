@@ -41,12 +41,44 @@ export const fetchCart = () => {
       if (error.response) dispatch(fetchCartFailure(error.response.data.message));
     });
   };
-}
+};
 
 export const addToCart = (productDetails, axiosHeaders) => {
   return dispatch => {
     axios.post(process.env.REACT_APP_SHOPPING_CART_ADD_ITEM_URL, productDetails, axiosHeaders)
-      .then(response => dispatch(fetchCart()))
-      .catch(error => dispatch(fetchCart()));
-  }
-}
+    .then(response => dispatch(fetchCart()))
+    .catch(error => dispatch(fetchCart()));
+  };
+};
+
+export const increaseItemQuantity = (productDetails, axiosHeaders) => {
+  return dispatch => {
+    axios.post(process.env.REACT_APP_SHOPPING_CART_INCREASE_QUANTITY_URL, productDetails, axiosHeaders)
+    .then(response => dispatch(fetchCart()))
+    .catch(error => dispatch(fetchCart()));
+  };
+};
+
+export const decreaseItemQuantity = (productDetails, axiosHeaders) => {
+  return dispatch => {
+    axios.post(process.env.REACT_APP_SHOPPING_CART_DECREASE_QUANTITY_URL, productDetails, axiosHeaders)
+    .then(response => dispatch(fetchCart()))
+    .catch(error => dispatch(fetchCart()));
+  };
+};
+
+export const removeCartItem = (productDetails, axiosHeaders) => {
+  return dispatch => {
+    axios.post(process.env.REACT_APP_SHOPPING_CART_REMOVE_ITEM_URL, productDetails, axiosHeaders)
+    .then(response => dispatch(fetchCart()))
+    .catch(error => dispatch(fetchCart()));
+  };
+};
+
+export const clearCart = axiosHeaders => {
+  return dispatch => {
+    axios.post(process.env.REACT_APP_CLEAR_SHOPPING_CART_URL, axiosHeaders)
+    .then(response => dispatch(fetchCart()))
+    .catch(error => dispatch(fetchCart()));
+  };
+};

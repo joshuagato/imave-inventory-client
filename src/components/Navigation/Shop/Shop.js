@@ -16,11 +16,9 @@ export class Shop extends Component {
       event.preventDefault();
       
       const productId = event.target.children['productId'].value;
-      const productPrice = event.target.children['productPrice'].value;
 
       const productDetails = {
-        productId: productId,
-        productPrice: productPrice
+        productId: productId
       }
 
       const axiosHeaders = {

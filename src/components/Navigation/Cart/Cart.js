@@ -3,7 +3,6 @@ import './Cart.scss';
 import FaSpinner from '../../Utilities/FaSpinner/FaSpinner';
 import * as actions from '../../../store/actions/index';
 
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -11,29 +10,43 @@ import { NavLink } from 'react-router-dom';
 
 class Cart extends Component {
 
+  state = {
+    axiosHeaders: {
+      headers: {
+        Authorization: this.props.token
+      }
+    }
+  };
+
   componentDidMount() {
-    
     this.props.fetchCart();
   };
 
-  componentDidUpdate() {
+  decrement = id => {
     
-  }
+    const productDetails = {
+      productId: id
+    }
 
-  decrement = () => {
-    axios.get(process.env.REACT_APP_SHOPPING_CART_DECREASE_QUANTITY_URL, this.axiosHeaders)
-    .then(response => this.setState({ cart: response.data.cart }))
-    .catch(error => {
-      if (error.response) this.setState({ failureMessage: error.response.data.message });
-    });
+    this.props.decreaseQuantity(productDetails, this.state.axiosHeaders);
   };
 
-  increment = () => {
-    axios.get(process.env.REACT_APP_SHOPPING_CART_INCREASE_QUANTITY_URL, this.axiosHeaders)
-    .then(response => this.setState({ cart: response.data.cart }))
-    .catch(error => {
-      if (error.response) this.setState({ failureMessage: error.response.data.message });
-    });
+  increment = id => {
+    
+    const productDetails = {
+      productId: id
+    }
+
+    this.props.increaseQuantity(productDetails, this.state.axiosHeaders);
+  };
+
+  removeItem = id => {
+
+    const productDetails = {
+      productId: id
+    }
+
+    this.props.removeCartItem(productDetails, this.state.axiosHeaders);
   };
 
   render() {
@@ -77,13 +90,13 @@ class Cart extends Component {
                               <td className="unit-price">${item.unitPrice}</td><td>{item.quantity}</td>
                               <td>${subTotal.toFixed(2)}</td>
                               <td>
-                                <button onClick={this.decrement} className="decrease">
+                                <button onClick={this.decrement.bind(this, item.productId)} className="decrease">
                                   <FontAwesomeIcon icon={faMinus} />
                                 </button>
-                                <button onClick={this.increment} className="increase">
+                                <button onClick={() => this.increment(item.productId)} className="increase">
                                   <FontAwesomeIcon icon={faPlus} />
                                 </button>
-                                <button onClick={this.remove} className="remove">
+                                <button onClick={id => this.removeItem(item.productId)} className="remove">
                                   <FontAwesomeIcon icon={faTimes} />
                                 </button>
                               </td>
@@ -125,7 +138,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchCart: (axiosHeaders) => dispatch(actions.fetchCart(axiosHeaders)) 
+    fetchCart: () => dispatch(actions.fetchCart()),
+    increaseQuantity: (productDetails, axiosHeaders) => dispatch(actions.increaseItemQuantity(productDetails, axiosHeaders)),
+    decreaseQuantity: (productDetails, axiosHeaders) => dispatch(actions.decreaseItemQuantity(productDetails, axiosHeaders)),
+    removeCartItem: (productDetails, axiosHeaders) => dispatch(actions.removeCartItem(productDetails, axiosHeaders)),
+    clearCart: axiosHeaders => dispatch(actions.clearCart(axiosHeaders)),
   };
 };
 
