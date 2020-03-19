@@ -108,7 +108,7 @@ class Cart extends Component {
                   </table>
                   <section className="final-div">
                     <span className="grand-total">Grand Total: ${grandTotal.toFixed(2)}</span>
-                    <NavLink to='/cart'>Continue Shopping</NavLink>
+                    <NavLink to='/'>Continue Shopping</NavLink>
                     <NavLink to='/cart'>Proceed to Checkout</NavLink>
                   </section>
                 </div>
