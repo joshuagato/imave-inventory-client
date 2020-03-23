@@ -4,6 +4,8 @@ import './Shop.scss';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import FaSpinner from '../../Utilities/FaSpinner/FaSpinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 export class Shop extends Component {
   constructor(props) {
@@ -53,19 +55,23 @@ export class Shop extends Component {
                   <div className="upper-div">
                     <img src={`${process.env.REACT_APP_PRODUCT_PICTURES_URL}${product.imageUrl}`} 
                       alt="product_pic" />
-                    <span className="product-name">{product.title}</span>
-                    <span className="price">${product.price}</span>
-                  </div>
-                  <div className="lower-div">
-                    <small className="text-muted">{product.description}</small>
-                    <div className="buttons">
+                    <section>
+                      <span className="product-name">{product.title}</span>
+                      <span className="price">${product.price}</span>
+                    </section>
+                    <section>
                       <form onSubmit={this.addToCartHander}>
                         <input id="productId" type="hidden" value={product._id} />
                         <input id="productPrice" type="hidden" value={product.price} />
-                        <button className="add-to-cart">Add to Cart</button>
+                        <button className="add-to-cart" title="Add to Cart">
+                          <FontAwesomeIcon icon={faShoppingCart} />
+                        </button>
                       </form>
                       <button className="buy-now">Buy Now</button>
-                    </div>
+                    </section>
+                  </div>
+                  <div className="lower-div">
+                    <small className="text-muted">{product.description}</small>
                   </div>
                 </div>
               ))

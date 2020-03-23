@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Auxil from '../../../components/Utilities/Auxil/Auxil';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 
 class NavBar extends Component {
 
@@ -26,14 +28,16 @@ class NavBar extends Component {
               {
                 props.loggedIn ?
                   <NavLink className="nav-link" role="button" to="/profile">
-                    {userInfo.firstname + ' ' + userInfo.lastname}
+                    <FontAwesomeIcon icon={faUser} /> {userInfo.firstname}
                   </NavLink>
                 :
                 <NavLink className="nav-link" role="button" to="/register">Login/Register</NavLink>
               }
               {
                 props.loggedIn ?
-                  <NavLink className="nav-link" role="button" to="/cart">View Cart</NavLink>
+                  <NavLink className="nav-link" role="button" to="/cart">
+                    <FontAwesomeIcon icon={faShoppingCart} /> Cart
+                  </NavLink>
                   : null
               }
               <NavLink className="nav-link" role="button" to="/contact-us">Contact Us</NavLink>
