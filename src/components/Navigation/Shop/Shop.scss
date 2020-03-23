@@ -60,7 +60,7 @@
           color: #e7e5e5;
           padding: 0.2rem 0.4rem;
           border-radius: 0.3rem;
-          transition: all ease 0.7s;
+          outline: none;
           position: absolute;
           bottom: 0.5rem;
           opacity: 0;
@@ -76,7 +76,6 @@
         }
 
         .buy-now {
-          display: inline;
           transition: all ease 0.7s;
           position: absolute;
           bottom: 0.5rem;

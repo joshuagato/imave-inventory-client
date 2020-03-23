@@ -16,7 +16,6 @@ import Footer from './components/Footer/Footer';
 import NavBar from './components/Navigation/NavBar/NavBar';
 
 function App() {
-  console.log(process.env.REACT_APP_LOGIN_URL);
   return (
     <div className="App">
       <NavBar />

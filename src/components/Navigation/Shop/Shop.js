@@ -6,35 +6,55 @@ import * as actions from '../../../store/actions/index';
 import FaSpinner from '../../Utilities/FaSpinner/FaSpinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import StripeCheckout from 'react-stripe-checkout';
+import ReactStripeCheckout from 'react-stripe-checkout';
 
 export class Shop extends Component {
-  constructor(props) {
-    super(props);
 
-    this.productIdRef = React.createRef();
-    this.productPriceRef = React.createRef();
+  addToCartHander = event => {
+    event.preventDefault();
+    
+    const productId = event.target.children['productId'].value;
 
-    this.addToCartHander = event => {
-      event.preventDefault();
-      
-      const productId = event.target.children['productId'].value;
+    const productDetails = {
+      productId: productId
+    }
 
-      const productDetails = {
-        productId: productId
+    const axiosHeaders = {
+      headers: {
+        Authorization: this.props.token
       }
+    }
 
-      const axiosHeaders = {
-        headers: {
-          Authorization: this.props.token
-        }
-      }
+    this.props.addToCart(productDetails, axiosHeaders);
 
-      this.props.addToCart(productDetails, axiosHeaders);
+    this.props.history.push('/cart');
+  };
 
-      this.props.history.push('/cart');
+  makePayment = (product, token) => {
+    const body = {
+      token,
+      product
     };
-  }
+
+    const headers = {
+      "Content-Type": "application/json"
+    }
+
+    console.log(token)
+    console.log(product)
+
+    return fetch(process.env.REACT_APP_STRIPE_PAYMENT_URL, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body)
+    })
+    .then(response => {
+      console.log('Response', response);
+      const { status } = response;
+      console.log('Status', status);
+    })
+    .catch(error => console.log(error));
+  };
 
   componentDidMount() {
     this.props.onFetchAllProducts();
@@ -68,9 +88,9 @@ export class Shop extends Component {
                           <FontAwesomeIcon icon={faShoppingCart} />
                         </button>
                       </form>
-                      <article className="buy-now">
-                        <StripeCheckout />
-                      </article>
+                        <ReactStripeCheckout className="buy-now" label={`Buy @ ${product.price}`}
+                          stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY} currency="USD"
+                          token={this.makePayment.bind(this, product)} />
                     </section>
                   </div>
                   <div className="lower-div">
