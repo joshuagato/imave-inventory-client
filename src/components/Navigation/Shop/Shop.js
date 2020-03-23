@@ -6,6 +6,7 @@ import * as actions from '../../../store/actions/index';
 import FaSpinner from '../../Utilities/FaSpinner/FaSpinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import StripeCheckout from 'react-stripe-checkout';
 
 export class Shop extends Component {
   constructor(props) {
@@ -67,7 +68,9 @@ export class Shop extends Component {
                           <FontAwesomeIcon icon={faShoppingCart} />
                         </button>
                       </form>
-                      <button className="buy-now">Buy Now</button>
+                      <article className="buy-now">
+                        <StripeCheckout />
+                      </article>
                     </section>
                   </div>
                   <div className="lower-div">
