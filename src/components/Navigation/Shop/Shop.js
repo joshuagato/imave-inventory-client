@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import StripeCheckout from 'react-stripe-checkout';
 // import { CardElement } from '@stripe/react-stripe-js';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 export class Shop extends Component {
 
@@ -26,7 +28,13 @@ export class Shop extends Component {
       }
     }
 
-    this.props.addToCart(productDetails, axiosHeaders);
+    const data = {
+      nonLoggedInUserId: localStorage.getItem('nonLoggedInUserId'),
+      productId: productId
+    };
+
+    if (this.props.loggedIn) this.props.addToCart(productDetails, axiosHeaders);
+    else this.props.nonuserAddToCart(data);
 
     this.props.history.push('/cart');
   };
@@ -58,8 +66,19 @@ export class Shop extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.loggedIn)
     this.props.onFetchAllProducts();
+
+    if (!this.props.loggedIn) {
+      if (!localStorage.getItem('nonLoggedInUserId')) {
+        localStorage.setItem('nonLoggedInUserId', uuidv4());
+
+        const data = {
+          nonLoggedInUserId: localStorage.getItem('nonLoggedInUserId')
+        };
+  
+        axios.post(process.env.REACT_APP_NONUSER_CREATE_SHOPPING_CART_URL, data);
+      }
+    }
   }
 
   render() {
@@ -134,7 +153,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onFetchAllProducts: () => dispatch(actions.fetchProducts()),
-    addToCart: (productDetails, axiosHeaders) => dispatch(actions.addToCart(productDetails, axiosHeaders))
+    addToCart: (productDetails, axiosHeaders) => dispatch(actions.addToCart(productDetails, axiosHeaders)),
+    nonuserAddToCart: data => dispatch(actions.nonuserAddToCart(data))
   };
 }
 

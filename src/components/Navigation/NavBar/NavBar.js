@@ -33,13 +33,9 @@ class NavBar extends Component {
                 :
                 <NavLink className="nav-link" role="button" to="/register">Login/Register</NavLink>
               }
-              {
-                props.loggedIn ?
-                  <NavLink className="nav-link" role="button" to="/cart">
-                    <FontAwesomeIcon icon={faShoppingCart} /> Cart
-                  </NavLink>
-                  : null
-              }
+              <NavLink className="nav-link" role="button" to="/cart">
+                <FontAwesomeIcon icon={faShoppingCart} /> Cart
+              </NavLink>
               <NavLink className="nav-link" role="button" to="/contact-us">Contact Us</NavLink>
               <NavLink className="nav-link" role="button" to="/about-us">About Us</NavLink>
               <NavLink className="nav-link" role="button" to="/">Shop</NavLink>

@@ -16,29 +16,57 @@ class Cart extends Component {
       headers: {
         Authorization: this.props.token
       }
+    },
+    data: {
+      nonLoggedInUserId: localStorage.getItem('nonLoggedInUserId')
     }
   };
 
   componentDidMount() {
-    this.props.fetchCart();
+    if (this.props.loggedIn) this.props.fetchCart();
+    else this.props.nonuserFetchCart(this.state.data);
   };
 
   decrement = id => {
-    
     const productDetails = {
       productId: id
     }
 
-    this.props.decreaseQuantity(productDetails, this.state.axiosHeaders);
+    const data = {
+      nonLoggedInUserId: localStorage.getItem('nonLoggedInUserId'),
+      productId: id
+    };
+
+    if (this.props.loggedIn) this.props.decreaseQuantity(productDetails, this.state.axiosHeaders);
+    else this.props.nonuserDecreaseItemQuantity(data)
   };
 
   increment = id => {
-    
     const productDetails = {
       productId: id
     }
 
-    this.props.increaseQuantity(productDetails, this.state.axiosHeaders);
+    const data = {
+      nonLoggedInUserId: localStorage.getItem('nonLoggedInUserId'),
+      productId: id
+    };
+
+    if (this.props.loggedIn) this.props.increaseQuantity(productDetails, this.state.axiosHeaders);
+    else this.props.nonuserIncreaseItemQuantity(data)
+  };
+
+  removeItem = id => {
+    const productDetails = {
+      productId: id
+    }
+
+    const data = {
+      nonLoggedInUserId: localStorage.getItem('nonLoggedInUserId'),
+      productId: id
+    };
+
+    if (this.props.loggedIn) this.props.removeCartItem(productDetails, this.state.axiosHeaders);
+    else this.props.nonuserRemoveCartItem(data);
   };
 
   onToken = token => {
@@ -66,15 +94,6 @@ class Cart extends Component {
     .then(result => console.log('Result', result))
     .catch(error => console.log(error));
   }
-
-  removeItem = id => {
-
-    const productDetails = {
-      productId: id
-    }
-
-    this.props.removeCartItem(productDetails, this.state.axiosHeaders);
-  };
 
   render() {
     const { cart } = this.props;
@@ -136,7 +155,7 @@ class Cart extends Component {
                   <section className="final-div">
                     <span className="grand-total">Grand: ${grandTotal.toFixed(2)}</span>
                     <NavLink to='/'>Continue Shopping</NavLink>
-                    <StripeCheckout name="iMave Order Payment" amount={grandTotal * 100}
+                    <StripeCheckout name="iMave Order Payment" amount={grandTotal.toFixed(2) * 100}
                       stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY} currency="USD"
                       token={this.onToken} shippingAddress billingAddress zipCode />
                   </section>
@@ -158,6 +177,9 @@ class Cart extends Component {
 
 const mapStateToProps = state => {
   return {
+    loggedIn: state.loginReducer.userInfo.firstname !== null && 
+      state.loginReducer.userInfo.lastname !== null &&
+      state.loginReducer.token !== null,
     token: state.loginReducer.token,
     cart: state.cartReducer.cart,
     loading: state.cartReducer.loading,
@@ -172,6 +194,11 @@ const mapDispatchToProps = dispatch => {
     decreaseQuantity: (productDetails, axiosHeaders) => dispatch(actions.decreaseItemQuantity(productDetails, axiosHeaders)),
     removeCartItem: (productDetails, axiosHeaders) => dispatch(actions.removeCartItem(productDetails, axiosHeaders)),
     clearCart: axiosHeaders => dispatch(actions.clearCart(axiosHeaders)),
+    nonuserFetchCart: data => dispatch(actions.nonuserFetchCart(data)),
+    nonuserIncreaseItemQuantity: data => dispatch(actions.nonuserIncreaseItemQuantity(data)),
+    nonuserDecreaseItemQuantity: data => dispatch(actions.nonuserDecreaseItemQuantity(data)),
+    nonuserRemoveCartItem: data => dispatch(actions.nonuserRemoveCartItem(data)),
+    nonuserClearCart: data => dispatch(actions.nonuserClearCart(data)),
   };
 };
 
