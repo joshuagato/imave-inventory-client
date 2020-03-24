@@ -109,7 +109,7 @@ export class Shop extends Component {
                           <FontAwesomeIcon icon={faShoppingCart} />
                         </button>
                       </form>
-                        <StripeCheckout className="buy-now" label={`Buy @ $${product.price}`}
+                        <StripeCheckout className="buy-now" label="Buy Now"
                           name="iMave Order Payment" amount={product.price * 100}
                           stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY} currency="USD"
                           token={this.makePayment.bind(this, product)} shippingAddress
