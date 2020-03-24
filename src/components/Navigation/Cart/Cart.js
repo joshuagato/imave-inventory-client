@@ -23,6 +23,7 @@ class Cart extends Component {
   };
 
   componentDidMount() {
+    console.log(process.env.REACT_APP_NONUSER_CREATE_SHOPPING_CART_URL)
     if (this.props.loggedIn) this.props.fetchCart();
     else this.props.nonuserFetchCart(this.state.data);
   };
