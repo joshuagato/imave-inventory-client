@@ -7,6 +7,7 @@ import FaSpinner from '../../Utilities/FaSpinner/FaSpinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import StripeCheckout from 'react-stripe-checkout';
+// import { CardElement } from '@stripe/react-stripe-js';
 
 export class Shop extends Component {
 
@@ -44,11 +45,12 @@ export class Shop extends Component {
       body: JSON.stringify(body)
     }
 
-    return fetch(process.env.REACT_APP_STRIPE_PAYMENT_URL, data)
+    return fetch(process.env.REACT_APP_STRIPE_PAYMENT_STRAIGHT_PURCHASE_URL, data)
     .then(response => {
       const { status } = response;
       console.log('Status', status);
-      
+      console.log('Response', response);
+
       return response.json();
     })
     .then(result => console.log('Result', result))
@@ -93,6 +95,12 @@ export class Shop extends Component {
                           stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY} currency="USD"
                           token={this.makePayment.bind(this, product)} shippingAddress
                           billingAddress zipCode panelLabel={`Pay iMave`} />
+                      {/* <form onSubmit={this.handleSubmit}>
+                        <label className="buy-now">
+                          Card details
+                          <CardElement options={CARD_ELEMENT_OPTIONS} />
+                        </label>
+                      </form> */}
                     </section>
                   </div>
                   <div className="lower-div">

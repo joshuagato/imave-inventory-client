@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import StripeCheckout from 'react-stripe-checkout';
 
 class Cart extends Component {
 
@@ -39,6 +40,32 @@ class Cart extends Component {
 
     this.props.increaseQuantity(productDetails, this.state.axiosHeaders);
   };
+
+  onToken = token => {
+    const body = {
+      token,
+      // product
+    };
+
+    const data = {
+      method: 'post',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    }
+
+    return fetch(process.env.REACT_APP_STRIPE_PAYMENT_STRAIGHT_PURCHASE_URL, data)
+    .then(response => {
+      const { status } = response;
+      console.log('Status', status);
+      console.log('Response', response);
+
+      return response.json();
+    })
+    .then(result => console.log('Result', result))
+    .catch(error => console.log(error));
+  }
 
   removeItem = id => {
 
@@ -107,9 +134,11 @@ class Cart extends Component {
                     </tbody>
                   </table>
                   <section className="final-div">
-                    <span className="grand-total">Grand Total: ${grandTotal.toFixed(2)}</span>
+                    <span className="grand-total">Grand: ${grandTotal.toFixed(2)}</span>
                     <NavLink to='/'>Continue Shopping</NavLink>
-                    <NavLink to='/cart'>Proceed to Checkout</NavLink>
+                    <StripeCheckout name="iMave Order Payment" amount={grandTotal * 100}
+                      stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY} currency="USD"
+                      token={this.onToken} shippingAddress billingAddress zipCode />
                   </section>
                 </div>
               </section>
