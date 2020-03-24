@@ -6,7 +6,7 @@ import * as actions from '../../../store/actions/index';
 import FaSpinner from '../../Utilities/FaSpinner/FaSpinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import ReactStripeCheckout from 'react-stripe-checkout';
+import StripeCheckout from 'react-stripe-checkout';
 
 export class Shop extends Component {
 
@@ -36,27 +36,27 @@ export class Shop extends Component {
       product
     };
 
-    const headers = {
-      "Content-Type": "application/json"
+    const data = {
+      method: 'post',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
     }
 
-    console.log(token)
-    console.log(product)
-
-    return fetch(process.env.REACT_APP_STRIPE_PAYMENT_URL, {
-      method: "POST",
-      headers: headers,
-      body: JSON.stringify(body)
-    })
+    return fetch(process.env.REACT_APP_STRIPE_PAYMENT_URL, data)
     .then(response => {
-      console.log('Response', response);
       const { status } = response;
       console.log('Status', status);
+      
+      return response.json();
     })
+    .then(result => console.log('Result', result))
     .catch(error => console.log(error));
   };
 
   componentDidMount() {
+    console.log(this.props.loggedIn)
     this.props.onFetchAllProducts();
   }
 
@@ -88,9 +88,11 @@ export class Shop extends Component {
                           <FontAwesomeIcon icon={faShoppingCart} />
                         </button>
                       </form>
-                        <ReactStripeCheckout className="buy-now" label={`Buy @ ${product.price}`}
+                        <StripeCheckout className="buy-now" label={`Buy @ $${product.price}`}
+                          name="iMave Order Payment" amount={product.price * 100}
                           stripeKey={process.env.REACT_APP_STRIPE_PUBLIC_KEY} currency="USD"
-                          token={this.makePayment.bind(this, product)} />
+                          token={this.makePayment.bind(this, product)} shippingAddress
+                          billingAddress zipCode panelLabel={`Pay iMave`} />
                     </section>
                   </div>
                   <div className="lower-div">
@@ -110,6 +112,9 @@ export class Shop extends Component {
 
 const mapStateToProps = state => {
   return {
+    loggedIn: state.loginReducer.userInfo.firstname !== null && 
+      state.loginReducer.userInfo.lastname !== null &&
+      state.loginReducer.token !== null,
     token: state.loginReducer.token,
     products: state.productsReducer.products,
     loading: state.productsReducer.loading,
