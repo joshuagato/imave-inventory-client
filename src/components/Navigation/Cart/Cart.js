@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import StripeCheckout from 'react-stripe-checkout';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 class Cart extends Component {
 
@@ -23,9 +25,20 @@ class Cart extends Component {
   };
 
   componentDidMount() {
-    console.log(process.env.REACT_APP_NONUSER_CREATE_SHOPPING_CART_URL)
     if (this.props.loggedIn) this.props.fetchCart();
     else this.props.nonuserFetchCart(this.state.data);
+
+    if (!this.props.loggedIn) {
+      if (!localStorage.getItem('nonLoggedInUserId')) {
+        localStorage.setItem('nonLoggedInUserId', uuidv4());
+
+        const data = {
+          nonLoggedInUserId: localStorage.getItem('nonLoggedInUserId')
+        };
+  
+        axios.post(process.env.REACT_APP_NONUSER_CREATE_SHOPPING_CART_URL, data);
+      }
+    }
   };
 
   decrement = id => {
