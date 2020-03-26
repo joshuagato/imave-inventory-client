@@ -25,12 +25,12 @@ html, body {
 .navbar-brand {
   a {
     color: rgba(255, 255, 255, 0.75);
-      text-decoration: none !important;
-      transition: color ease-in 0.5s;
+    text-decoration: none !important;
+    transition: color ease-in 0.5s;
 
-      &:hover {
-        color: rgba(255, 255, 255, 1);
-      }
+    &:hover {
+      color: rgba(255, 255, 255, 1);
+    }
   }
 }
 
