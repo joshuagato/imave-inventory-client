@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import FaSpinner from '../../Utilities/FaSpinner/FaSpinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faEye } from '@fortawesome/free-solid-svg-icons';
 import StripeCheckout from 'react-stripe-checkout';
 // import { CardElement } from '@stripe/react-stripe-js';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import QuickView from './QuickView/QuickView';
 
 export class Shop extends Component {
 
@@ -92,7 +93,7 @@ export class Shop extends Component {
         {this.props.products ?
           <section className="products">
             {
-              this.props.products.map(product => (
+              this.props.products.map((product, i) => (
                 <div key={product._id} className="products-list">
                   <div className="upper-div">
                     <img src={`${process.env.REACT_APP_PRODUCT_PICTURES_URL}${product.imageUrl}`} 
@@ -102,10 +103,15 @@ export class Shop extends Component {
                       <span className="price">${product.price}</span>
                     </section>
                     <section>
+                      <label htmlFor={product._id} className="quick-view" title="Quick View">
+                        <FontAwesomeIcon icon={faEye} />
+                      </label>
+                      <QuickView id={product._id} product={product} />
+
                       <form onSubmit={this.addToCartHander}>
                         <input id="productId" type="hidden" value={product._id} />
                         <input id="productPrice" type="hidden" value={product.price} />
-                        <button className="add-to-cart" title="Add to Cart">
+                        <button type="submit" className="add-to-cart" title="Add to Cart">
                           <FontAwesomeIcon icon={faShoppingCart} />
                         </button>
                       </form>
